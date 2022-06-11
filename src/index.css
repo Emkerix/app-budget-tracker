@@ -1,0 +1,31 @@
+@import url('https://fonts.googleapis.com/css2?family=Teko:wght@300;400&display=swap');
+@import url("./properties.css");
+
+*, ::before, ::after {
+  box-sizing: inherit;
+}
+
+html, body {
+  position: relative;
+  height: 100%;
+  width: 100%;
+}
+
+html {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Teko', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background: #1e1e1e;
+  color: #fff;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}

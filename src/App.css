@@ -1,0 +1,11 @@
+
+
+.App {
+  text-align: left;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  margin: 0 10px;
+  position: relative;
+}

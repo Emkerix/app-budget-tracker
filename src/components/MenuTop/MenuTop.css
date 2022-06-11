@@ -1,0 +1,22 @@
+.menu-top{
+    padding: 12px 22px;
+    background: #fff;
+    text-align: left;
+    border-radius: 0px 0px 20px 20px;
+    font-size: 24px;
+    filter: drop-shadow(0px 0px 3px #fff);
+    color: #000;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: absolute;
+    width: 100%;
+    left: 0;
+    top: 0;
+}
+
+.menu-top svg{
+    fill: var(--fill-gray);
+    width: 25px;
+    height: 25px;
+}
