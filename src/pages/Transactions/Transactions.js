@@ -7,21 +7,11 @@ import "./Transactions.css";
 const Transactions = () => {
   const [data, setData] = useState([]);
   const fetchData = async () => {
-    const data = await fetch(`${_API_URL_}/transactions`);
-    const json = await data.json();
-    setData(json.rows);
-  };
-
-  const deleteItem = async (itemId) => {
-    await fetch(`${_API_URL_}/transactions/${itemId}`, {
-      method: "DELETE",
+    const data = await fetch(`${_API_URL_}/transactions`, {
       headers: { "Content-Type": "application/json" },
     });
-
-    const newData = data.filter(
-      (transaction) => transaction.ID_TRANSACTION !== itemId
-    );
-    setData(newData);
+    const json = await data.json();
+    setData(json.rows);
   };
 
   useEffect(() => {
@@ -40,11 +30,7 @@ const Transactions = () => {
             </div>
           ) : (
             data.map((item) => (
-              <ListItem
-                key={item.ID_TRANSACTION}
-                onDelete={() => deleteItem(item.ID_TRANSACTION)}
-                item={item}
-              />
+              <ListItem key={item.ID_TRANSACTION} item={item} />
             ))
           )}
         </div>

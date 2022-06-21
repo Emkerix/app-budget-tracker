@@ -8,6 +8,7 @@ app.use(express.json());
 
 const db = require("./db.js");
 
+/* TRANSACTIONS */
 app.get("/transactions", (request, response) => {
   const query = `SELECT t.*, tt.NAME AS 'TRANSACTION_TYPE_NAME', cur.PREFIX AS 'CURRENCY_PREFIX', cat.NAME as CATEGORY_NAME
   FROM 'TRANSACTION' AS t
@@ -40,7 +41,7 @@ app.get("/transactions/:id", (request, response) => {
 app.delete("/transactions/:id", (request, response) => {
   db.run(
     `DELETE FROM 'TRANSACTION' WHERE ID_TRANSACTION = ?`,
-    request.params.id,
+    [request.params.id],
     (error) => {
       if (error) {
         response.status(404).json({ err: error.message });
@@ -66,6 +67,50 @@ app.post("/transactions", (request, response) => {
     }
   );
 });
+
+/* CATEGORIES */
+app.get("/categories", (request, response) => {
+  const query = `SELECT * FROM 'CATEGORY';`;
+  db.all(query, [], (error, rows) => {
+    if (error) {
+      response.status(404).json({ err: error.message });
+    }
+    rows.forEach((row) => {
+      console.log(row);
+    });
+    response.json({ rows });
+  });
+});
+
+/* TYPES */
+app.get("/transaction_types", (request, response) => {
+  const query = `SELECT * FROM 'TRANSACTION_TYPE';`;
+  db.all(query, [], (error, rows) => {
+    if (error) {
+      response.status(404).json({ err: error.message });
+    }
+    rows.forEach((row) => {
+      console.log(row);
+    });
+    response.json({ rows });
+  });
+});
+
+/* CURRENCIES */
+app.get("/currencies", (request, response) => {
+  const query = `SELECT * FROM 'CURRENCY';`;
+  db.all(query, [], (error, rows) => {
+    if (error) {
+      response.status(404).json({ err: error.message });
+    }
+    rows.forEach((row) => {
+      console.log(row);
+    });
+    response.json({ rows });
+  });
+});
+
+/* */
 
 app.get("/", (request, response) => {
   response.json({ status: "running" });

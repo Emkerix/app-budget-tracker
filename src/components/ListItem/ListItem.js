@@ -5,9 +5,11 @@ import {
 } from "react-icons/bs";
 import { BiBus, BiDotsHorizontalRounded } from "react-icons/bi";
 import { GiHealthNormal } from "react-icons/gi";
-import { FaBreadSlice, FaMoneyBillAlt, FaPlus } from "react-icons/fa";
+import { FaBreadSlice, FaMoneyBillAlt } from "react-icons/fa";
+import { AiFillEdit } from "react-icons/ai";
 import { MdTravelExplore } from "react-icons/md";
 import { RiHandCoinLine } from "react-icons/ri";
+import { _API_URL_ } from "../../utils/globals";
 
 import "./ListItem.css";
 
@@ -42,15 +44,20 @@ const ListItem = ({ item, onDelete }) => {
     }
   };
 
+  const deleteItem = async (itemId) => {
+    await fetch(`${_API_URL_}/transactions/${itemId}`, {
+      method: "DELETE",
+      headers: { "Content-Type": "application/json" },
+    });
+  };
+
   return (
     <div className="item">
       <div className="left">
         <div>
           {IconTransactionType(item.TRANSACTION_TYPE_NAME)}
           <span>
-            {item.ID_TRANSACTION +
-              " " +
-              item.TRANSACTION_TYPE_NAME +
+            {item.TRANSACTION_TYPE_NAME +
               " " +
               item.AMOUNT +
               " " +
@@ -68,12 +75,20 @@ const ListItem = ({ item, onDelete }) => {
       <div className="right">
         <div className="button">
           <button>
-            <FaPlus />
+            <AiFillEdit />
           </button>
         </div>
 
         <div className="button">
-          <button type="button" onClick={() => onDelete(item.ID_TRANSACTION)}>
+          <button
+            type="button"
+            onClick={() =>
+              // eslint-disable-next-line no-restricted-globals
+              confirm("Czy chcesz usunąć ten rekord?")
+                ? deleteItem(item.ID_TRANSACTION)
+                : null
+            }
+          >
             <BsFillTrashFill />
           </button>
         </div>

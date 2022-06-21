@@ -25,18 +25,21 @@
 
 .item .right{display: flex;
 flex-direction: column;
-gap: 7px;
+}
+
+.item .right > .button{
+    margin-bottom: 7px;
 }
 
 .item .right .button button{
     width: 40px;
+    height: 40px;
     border-radius: 20px;
     background: #fff;
     filter: drop-shadow(0px 0px 3px #fff);
     justify-content: center;
     align-items: center;
     display: flex;
-    height: 100%;
     border: none;
 }
 

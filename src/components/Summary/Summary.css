@@ -14,7 +14,10 @@
 
 .summary .title{
     display: flex;
-    gap: 6px;
+}
+
+.summary .title span{
+    padding-left: 6px;
 }
 
 .summary svg{
