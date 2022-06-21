@@ -15,7 +15,7 @@ function App() {
               path="/"
               element={
                 <>
-                  {/* <Preloader /> */}
+                  <Preloader />
                   <Transactions />
                 </>
               }
