@@ -1,4 +1,8 @@
-import { BsArrowLeftSquareFill, BsArrowRightSquareFill } from "react-icons/bs";
+import {
+  BsArrowLeftSquareFill,
+  BsArrowRightSquareFill,
+  BsFillTrashFill,
+} from "react-icons/bs";
 import { BiBus, BiDotsHorizontalRounded } from "react-icons/bi";
 import { GiHealthNormal } from "react-icons/gi";
 import { FaBreadSlice, FaMoneyBillAlt, FaPlus } from "react-icons/fa";
@@ -7,7 +11,7 @@ import { RiHandCoinLine } from "react-icons/ri";
 
 import "./ListItem.css";
 
-const ListItem = ({ item }) => {
+const ListItem = ({ item, onDelete }) => {
   const IconTransactionType = (type) => {
     switch (type) {
       case "PRZYCHÓD":
@@ -37,13 +41,16 @@ const ListItem = ({ item }) => {
       default:
     }
   };
+
   return (
     <div className="item">
       <div className="left">
         <div>
           {IconTransactionType(item.TRANSACTION_TYPE_NAME)}
           <span>
-            {item.TRANSACTION_TYPE_NAME +
+            {item.ID_TRANSACTION +
+              " " +
+              item.TRANSACTION_TYPE_NAME +
               " " +
               item.AMOUNT +
               " " +
@@ -66,8 +73,8 @@ const ListItem = ({ item }) => {
         </div>
 
         <div className="button">
-          <button>
-            <FaPlus />
+          <button type="button" onClick={() => onDelete(item.ID_TRANSACTION)}>
+            <BsFillTrashFill />
           </button>
         </div>
       </div>

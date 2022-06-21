@@ -37,6 +37,20 @@ app.get("/transactions/:id", (request, response) => {
   });
 });
 
+app.delete("/transactions/:id", (request, response) => {
+  db.run(
+    `DELETE FROM 'TRANSACTION' WHERE ID_TRANSACTION = ?`,
+    request.params.id,
+    (error) => {
+      if (error) {
+        response.status(404).json({ err: error.message });
+      } else {
+        response.status(201).json({ message: "deleted" });
+      }
+    }
+  );
+});
+
 app.post("/transactions", (request, response) => {
   const { ID_TYPE, ID_CATEGORY, ID_CURRENCY, TITLE, DATE, AMOUNT } =
     request.body;
