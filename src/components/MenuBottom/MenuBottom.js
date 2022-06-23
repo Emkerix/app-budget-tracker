@@ -15,7 +15,7 @@ const MenuBottom = () => {
   return (
     <div className="menu-bottom">
       <div className="menu"></div>
-      {location.pathname === "/addtransaction" ? (
+      {location.pathname.includes("transaction") ? (
         <div className="button">
           <button onClick={() => navigate(-1)}>
             <BsArrowReturnLeft />

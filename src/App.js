@@ -1,5 +1,5 @@
 import "./App.css";
-import { AddTransaction, Transactions } from "./pages";
+import { AddTransaction, EditTransaction, Transactions } from "./pages";
 import { MenuTop, MenuBottom, Preloader } from "./components";
 
 import { Route, HashRouter as Router, Routes } from "react-router-dom";
@@ -21,6 +21,7 @@ function App() {
               }
             />
             <Route path="/addtransaction" element={<AddTransaction />} />
+            <Route path="/edittransaction/:id" element={<EditTransaction />} />
           </Routes>
           <MenuBottom />
         </Router>

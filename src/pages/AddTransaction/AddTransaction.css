@@ -1,3 +1,7 @@
 .container.mod{
     padding-top: 80px;
 }
+
+.container.add select option:first-child{
+    display: none;
+}

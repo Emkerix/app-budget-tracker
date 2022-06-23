@@ -3,13 +3,13 @@ import { _API_URL_ } from "../../utils/globals";
 import "./AddTransaction.css";
 
 const AddTransaction = () => {
-  const [transaction_type, setTransactionType] = useState([]);
-  const [category, setCategory] = useState([]);
-  const [currency, setCurrency] = useState([]);
+  const [transactionTypes, setTransactionType] = useState([]);
+  const [categories, setCategory] = useState([]);
+  const [currencies, setCurrency] = useState([]);
 
   const fetchData = async () => {
-    const [transaction_type, category, currency] = await Promise.all([
-      fetch(`${_API_URL_}/transaction_types`, {
+    const [transactionType, category, currency] = await Promise.all([
+      fetch(`${_API_URL_}/transaction-types`, {
         headers: { "Content-Type": "application/json" },
       }),
       fetch(`${_API_URL_}/categories`, {
@@ -20,7 +20,7 @@ const AddTransaction = () => {
       }),
     ]);
 
-    const json_1 = await transaction_type.json();
+    const json_1 = await transactionType.json();
     setTransactionType(json_1.rows);
 
     const json_2 = await category.json();
@@ -34,24 +34,44 @@ const AddTransaction = () => {
     fetchData();
   }, []);
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    const title = e.target.title.value;
+    const type = e.target.type.value;
+    const category = e.target.category.value;
+    const date = e.target.date.value;
+    const amount = e.target.amount.value;
+    const currency = e.target.currency.value;
+
+    const test = {
+      ID_TYPE: type,
+      ID_CATEGORY: category,
+      ID_CURRENCY: currency,
+      TITLE: title,
+      DATE: date,
+      AMOUNT: amount,
+    };
+    fetch(`${_API_URL_}/transactions`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(test),
+    });
+  };
+
   return (
     <>
-      <div className="container mod">
+      <div className="container mod add">
         <h2 className="title">Dodawanie rekordu</h2>
-        <form>
-          <input type="text" id="title" placeholder="Tytuł" />
+        <form onSubmit={handleSubmit}>
+          <input type="text" name="title" placeholder="Tytuł" required />
           <br />
-          <select
-            defaultValue="Wybierz typ transakcji"
-            name="type"
-            id="type"
-            required
-          >
+          <select defaultValue="Wybierz typ transakcji" name="type" required>
             <option disabled value="Wybierz typ transakcji">
               Wybierz typ transakcji
             </option>
 
-            {transaction_type.map((item) => (
+            {transactionTypes.map((item) => (
               <option
                 value={item.ID_TRANSACTION_TYPE}
                 key={item.ID_TRANSACTION_TYPE}
@@ -61,50 +81,43 @@ const AddTransaction = () => {
             ))}
           </select>
           <br />
-          <select
-            defaultValue="Wybierz kategorię"
-            name="category"
-            id="category"
-            required
-          >
+          <select defaultValue="Wybierz kategorię" name="category" required>
             <option disabled value="Wybierz kategorię">
               Wybierz kategorię
             </option>
 
-            {category.map((item) => (
+            {categories.map((item) => (
               <option value={item.ID_CATEGORY} key={item.ID_CATEGORY}>
                 {item.NAME}
               </option>
             ))}
           </select>
           <br />
-          <input type="date" id="date" required />
+          <input type="date" name="date" required />
           <br />
           <input
             min="0"
             type="number"
             id="amount"
+            name="amount"
             placeholder="Kwota"
             required
           />
-          <select
-            defaultValue="Wybierz walutę"
-            name="currency"
-            id="currency"
-            required
-          >
+          <select defaultValue="Wybierz walutę" name="currency" required>
             <option disabled value="Wybierz walutę">
               Wybierz walutę
             </option>
 
-            {currency.map((item) => (
+            {currencies.map((item) => (
               <option value={item.ID_CURRENCY} key={item.ID_CURRENCY}>
                 {item.PREFIX}
               </option>
             ))}
           </select>
           <br />
-          <button type="button" value="Dodaj" />
+          <button type="submit" value="Dodaj">
+            {">"} Dodaj {"<"}
+          </button>
         </form>
       </div>
     </>

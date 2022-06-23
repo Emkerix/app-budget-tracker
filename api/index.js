@@ -28,7 +28,14 @@ app.get("/transactions", (request, response) => {
 });
 
 app.get("/transactions/:id", (request, response) => {
-  const query = `SELECT * FROM 'TRANSACTION' WHERE ID_TRANSACTION=${request.params.id};`;
+  const query = `SELECT t.DATE, t.AMOUNT, t.TITLE, tt.NAME AS 'TRANSACTION_TYPE_NAME', cur.PREFIX AS 'CURRENCY_PREFIX', cat.NAME as CATEGORY_NAME
+  FROM 'TRANSACTION' AS t
+  LEFT JOIN 'TRANSACTION_TYPE' AS 'tt' ON t.ID_TYPE=tt.ID_TRANSACTION_TYPE
+  LEFT JOIN 'CURRENCY' AS 'cur' ON t.ID_CURRENCY=cur.ID_CURRENCY
+  LEFT JOIN 'CATEGORY' AS 'cat' ON t.ID_CATEGORY=cat.ID_CATEGORY
+  WHERE ID_TRANSACTION=${request.params.id}
+  ;`;
+
   db.all(query, [], (error, rows) => {
     if (error) {
       response.status(404).json({ err: error.message });
@@ -40,7 +47,7 @@ app.get("/transactions/:id", (request, response) => {
 
 app.delete("/transactions/:id", (request, response) => {
   db.run(
-    `DELETE FROM 'TRANSACTION' WHERE ID_TRANSACTION = ?`,
+    `DELETE FROM 'TRANSACTION' WHERE ID_TRANSACTION=?`,
     [request.params.id],
     (error) => {
       if (error) {
@@ -68,6 +75,22 @@ app.post("/transactions", (request, response) => {
   );
 });
 
+app.put("/transactions/:id", (request, response) => {
+  const { ID_TYPE, ID_CATEGORY, ID_CURRENCY, TITLE, DATE, AMOUNT } =
+    request.body;
+  db.run(
+    `UPDATE 'TRANSACTION' SET  ID_TYPE=?, ID_CATEGORY=?, ID_CURRENCY=?, TITLE=?, DATE=?, AMOUNT=? WHERE ID_TRANSACTION=?`,
+    [ID_TYPE, ID_CATEGORY, ID_CURRENCY, TITLE, DATE, AMOUNT, request.params.id],
+    (error) => {
+      if (error) {
+        response.status(404).json({ err: error.message });
+      } else {
+        response.status(201).json({ message: "set" });
+      }
+    }
+  );
+});
+
 /* CATEGORIES */
 app.get("/categories", (request, response) => {
   const query = `SELECT * FROM 'CATEGORY';`;
@@ -83,7 +106,7 @@ app.get("/categories", (request, response) => {
 });
 
 /* TYPES */
-app.get("/transaction_types", (request, response) => {
+app.get("/transaction-types", (request, response) => {
   const query = `SELECT * FROM 'TRANSACTION_TYPE';`;
   db.all(query, [], (error, rows) => {
     if (error) {

@@ -11,9 +11,13 @@ import { MdTravelExplore } from "react-icons/md";
 import { RiHandCoinLine } from "react-icons/ri";
 import { _API_URL_ } from "../../utils/globals";
 
+import { useNavigate } from "react-router-dom";
+
 import "./ListItem.css";
 
-const ListItem = ({ item, onDelete }) => {
+const ListItem = ({ item }) => {
+  const navigate = useNavigate();
+
   const IconTransactionType = (type) => {
     switch (type) {
       case "PRZYCHÓD":
@@ -51,6 +55,10 @@ const ListItem = ({ item, onDelete }) => {
     });
   };
 
+  const EditItem = (itemId) => {
+    navigate(`/edittransaction/${itemId}`);
+  };
+
   return (
     <div className="item">
       <div className="left">
@@ -61,7 +69,10 @@ const ListItem = ({ item, onDelete }) => {
               " " +
               item.AMOUNT +
               " " +
-              item.CURRENCY_PREFIX}
+              item.CURRENCY_PREFIX +
+              "   " +
+              item.TITLE +
+              " "}
           </span>
         </div>
         <div>
@@ -74,7 +85,7 @@ const ListItem = ({ item, onDelete }) => {
       </div>
       <div className="right">
         <div className="button">
-          <button>
+          <button type="button" onClick={() => EditItem(item.ID_TRANSACTION)}>
             <AiFillEdit />
           </button>
         </div>
