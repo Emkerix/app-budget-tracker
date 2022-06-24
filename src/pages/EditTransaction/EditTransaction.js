@@ -22,14 +22,13 @@ const EditTransaction = () => {
       CATEGORY_NAME: "",
     },
   ]);
-  console.log(`${_API_URL_}/transactions/${id}`);
+
   const fetchSingleData = async () => {
     const singleData = await fetch(`${_API_URL_}/transactions/${id}`, {
       headers: { "Content-Type": "application/json" },
     });
     const json = await singleData.json();
     setSingleData(json.rows);
-    console.log(json);
   };
 
   useEffect(() => {
@@ -87,7 +86,6 @@ const EditTransaction = () => {
     navigate(-1);
   };
 
-  console.log(singleData);
   return (
     <div className="container mod">
       {singleData !== [] ? (

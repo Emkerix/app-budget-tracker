@@ -62,18 +62,10 @@ const ListItem = ({ item }) => {
   return (
     <div className="item">
       <div className="left">
+        <div>{item.TITLE}</div>
         <div>
           {IconTransactionType(item.TRANSACTION_TYPE_NAME)}
-          <span>
-            {item.TRANSACTION_TYPE_NAME +
-              " " +
-              item.AMOUNT +
-              " " +
-              item.CURRENCY_PREFIX +
-              "   " +
-              item.TITLE +
-              " "}
-          </span>
+          <span>{item.AMOUNT + " " + item.CURRENCY_PREFIX + " "}</span>
         </div>
         <div>
           <span>{IconCategory(item.CATEGORY_NAME)}</span>
