@@ -11,8 +11,8 @@ h1, h2, h3{
 
 input, select{
   width: 100%;
-  padding: 4px;
-  font-size: 14px;
+  padding: 8px 8px 8px 6px;
+  font-size: 20px;
   margin: 4px 0;
   font-weight: 500;
   font-family: 'Teko', sans-serif;
@@ -22,8 +22,8 @@ input, select{
 button[type=submit]{
   font-family: 'Teko', sans-serif;
   width: 100%;
-  font-size: 18px;
-  padding: 5px;
+  font-size: 22px;
+  padding: 8px;
   margin: 4px 0;
 }
 

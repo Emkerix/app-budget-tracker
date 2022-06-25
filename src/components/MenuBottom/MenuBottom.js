@@ -3,8 +3,10 @@ import { FaPlus } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 import { AiFillHome, AiOutlineAreaChart } from "react-icons/ai";
+import { TbArrowDown, TbArrowsUpDown, TbArrowUp } from "react-icons/tb";
+import { _SORT_STATES_ } from "../../utils/globals";
 
-const MenuBottom = () => {
+const MenuBottom = ({ sortState, setSortState, data, setData, fetchData }) => {
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -20,6 +22,22 @@ const MenuBottom = () => {
     navigate("/");
   };
 
+  const toggleSortState = () => {
+    if (sortState === _SORT_STATES_.DEFAULT) {
+      setData(data.sort((a, b) => a.AMOUNT - b.AMOUNT));
+      setSortState(_SORT_STATES_.ASC);
+    }
+    if (sortState === _SORT_STATES_.ASC) {
+      setData(data.reverse());
+      setSortState(_SORT_STATES_.DESC);
+    }
+    if (sortState === _SORT_STATES_.DESC) {
+      fetchData();
+      setSortState(_SORT_STATES_.DEFAULT);
+    }
+  };
+  const isRootPath = location.pathname === "/";
+
   return (
     <div className="menu-bottom">
       {/* <div className="menu"></div> */}
@@ -27,6 +45,23 @@ const MenuBottom = () => {
         <button onClick={redirectToChart}>
           <AiOutlineAreaChart />
         </button>
+      </div>
+      <div className="button">
+        {isRootPath && sortState === _SORT_STATES_.DEFAULT && (
+          <button onClick={toggleSortState}>
+            <TbArrowsUpDown />
+          </button>
+        )}
+        {isRootPath && sortState === _SORT_STATES_.ASC && (
+          <button onClick={toggleSortState}>
+            <TbArrowUp />
+          </button>
+        )}
+        {isRootPath && sortState === _SORT_STATES_.DESC && (
+          <button onClick={toggleSortState}>
+            <TbArrowDown />
+          </button>
+        )}
       </div>
       <div className="button">
         {location.pathname.includes("transaction") ||

@@ -35,7 +35,6 @@ const ShowChart = () => {
   }, []);
 
   const categoryLabels = categories.map((category) => category.NAME);
-  console.log(categoryLabels);
 
   const categoriesIncome = [];
   const categoriesOutcome = [];
@@ -126,9 +125,9 @@ const ShowChart = () => {
 
   return (
     <div className="container mod">
-      <h2 class="title">Przychody</h2>
+      <h2 className="title">Przychody</h2>
       <Pie data={pieIncomeData} />
-      <h2 class="title">Wydatki</h2>
+      <h2 className="title">Wydatki</h2>
       <Pie data={pieOutcomeData} />
     </div>
   );
